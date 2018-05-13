@@ -27,6 +27,7 @@ public class Field {
 
     private ArrayList<Integer> generateRandomSolution(Random random) {
         _field = new ArrayList<>(Collections.nCopies(_fieldSize*_fieldSize, 0));
+        boolean failed = false;
         for(int i = 0; i < _fieldSize; i++) {
             for(int j = 0; j < _fieldSize; j++) {
                 ArrayList<Integer> possibleValues = new ArrayList<>(_fieldSize);
@@ -37,10 +38,21 @@ public class Field {
                 possibleValues.removeAll(getRow(j));
                 possibleValues.removeAll(getColumn(i));
 
-                _field.set(i + j*_fieldSize, possibleValues.get(random.nextInt(possibleValues.size())));
+                if(possibleValues.size() != 0) {
+                    _field.set(i + j * _fieldSize, possibleValues.get(random.nextInt(possibleValues.size())));
+                }
+                else {
+                    failed = true;
+                    break;
+                }
             }
         }
-        return _field;
+        if(failed) {
+            return generateRandomSolution(random);
+        }
+        else {
+            return _field;
+        }
     }
 
     private ArrayList<Integer> removePartOfTheSolution() {
