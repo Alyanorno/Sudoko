@@ -1,6 +1,6 @@
 package sudoko;
 
-
+// Entry point for the program, contains main function
 public class Entry {
     public static void main(String[] args) {
         int boardSize = 4;
